@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PNG SME Market Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #000000, #8B0000);
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #FFD700;
+        }
+
+        h3 {
+            color: #FFD700;
+            margin-top: 10px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .home-btn {
+            display: block;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .whatsapp-home {
+            background: #25D366;
+            color: white;
+        }
+
+        .create-btn {
+            background: #FFD700;
+            color: black;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+
+        .add-btn {
+            background: #c00000;
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .generate-btn {
+            background: #FFD700;
+            color: black;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .copy-btn {
+            background: white;
+            color: black;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* PRODUCT CARD (Original Style Restored) */
+        .product-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-card h3 {
+            margin: 5px 0;
+        }
+
+        .product-card p {
+            text-align: left;
+            margin: 5px 0;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #FFD700;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .whatsapp-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        #businessSection, #preview {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🇵🇬 PNG SME Market Connect</h1>
+
+    <!-- HOME -->
+    <div id="homeSection">
+
+        <h2>Welcome to Papua New Guinean Market Connect</h2>
+
+        <p>
+            Promote your business professionally and connect with customers across Papua New Guinea.
+        </p>
+
+        <a href="https://wa.me/message/YXLGQHWPLRGZK1" target="_blank" class="home-btn whatsapp-home">
+            📲 Request Business Page Approval via WhatsApp
+        </a>
+
+        <button class="create-btn home-btn" onclick="openBusinessPage()">
+            🚀 Create Your Business Page
+        </button>
+
+    </div>
+
+    <!-- FORM -->
+    <div id="businessSection">
+
+        <h2>Create Your Business Page</h2>
+
+        <label>Business Name</label>
+        <input type="text" id="businessName">
+
+        <div id="products"></div>
+
+        <button class="add-btn" onclick="addProduct()">+ Add Product</button>
+
+        <button class="generate-btn" onclick="generatePage()">Generate My Business Page</button>
+
+    </div>
+
+    <!-- PREVIEW -->
+    <div id="preview">
+        <h2 id="previewBusiness"></h2>
+        <div id="previewProducts"></div>
+        <button class="copy-btn" onclick="copyLink()">Copy My Page Link</button>
+    </div>
+
+</div>
+
+<script>
+
+function openBusinessPage() {
+    document.getElementById("homeSection").style.display = "none";
+    document.getElementById("businessSection").style.display = "block";
+}
+
+let productCount = 0;
+
+function addProduct() {
+    productCount++;
+
+    const productHTML = `
+        <div>
+            <h3>Product ${productCount}</h3>
+
+            <label>Product Name</label>
+            <input type="text" class="pname">
+
+            <label>Description</label>
+            <textarea class="pdesc"></textarea>
+
+            <label>Price (K)</label>
+            <input type="text" class="pprice">
+
+            <label>WhatsApp Link</label>
+            <input type="text" class="pwhatsapp" placeholder="https://wa.me/675XXXXXXXX">
+
+            <label>Upload Product Image</label>
+            <input type="file" class="pimage" accept="image/*">
+        </div>
+    `;
+
+    document.getElementById("products").insertAdjacentHTML("beforeend", productHTML);
+}
+
+function generatePage() {
+
+    const businessName = document.getElementById("businessName").value;
+    const preview = document.getElementById("preview");
+    const previewBusiness = document.getElementById("previewBusiness");
+    const previewProducts = document.getElementById("previewProducts");
+
+    preview.style.display = "block";
+    previewBusiness.innerText = businessName;
+    previewProducts.innerHTML = "";
+
+    const names = document.querySelectorAll(".pname");
+    const descs = document.querySelectorAll(".pdesc");
+    const prices = document.querySelectorAll(".pprice");
+    const whatsapps = document.querySelectorAll(".pwhatsapp");
+    const images = document.querySelectorAll(".pimage");
+
+    for (let i = 0; i < names.length; i++) {
+
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+
+            const productCard = `
+                <div class="product-card">
+                    <img src="${e.target.result}">
+                    <h3>${names[i].value}</h3>
+                    <p>${descs[i].value}</p>
+                    <span class="price">Price: K${prices[i].value}</span>
+                    <a href="${whatsapps[i].value}" target="_blank" class="whatsapp-btn">
+                        Chat on WhatsApp
+                    </a>
+                </div>
+            `;
+
+            previewProducts.insertAdjacentHTML("beforeend", productCard);
+        }
+
+        if(images[i].files[0]) {
+            reader.readAsDataURL(images[i].files[0]);
+        }
+    }
+
+    alert("Business Page Generated Successfully!");
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link Copied!");
+}
+
+</script>
+
+</body>
+</html>
